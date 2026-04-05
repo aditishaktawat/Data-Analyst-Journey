@@ -54,3 +54,17 @@ SELECT city, longitude FROM north_american_cities WHERE longitude < -87.629798 O
 Select city,Country,Population from North_american_cities where country ="Mexico" order by population desc LiMIT 2;
 -- 5.List the third and fourth largest cities (by population) in the United States and their population
 Select city,Country,Population from North_american_cities where country ="United States" order by population desc LiMIT 2  offset 2;
+
+-- SQL Lesson 6: Multi-table queries with JOINs
+-- Learnt how inner joins works -Primary keys of both tables should match
+
+-- 1.Find the domestic and international sales for each movie ✓
+SELECT Domestic_sales, international_sales, title FROM Boxoffice INNER JOIN movies where movie_id = id; 
+
+-- 2.Show the sales numbers for each movie that did better internationally rather than domestically ✓
+SELECT title, international_sales,domestic_sales FROM boxOffice INNER JOIN movies where movie_id = id and international_sales > domestic_sales;
+-- Match the common attruibutes and required condition
+
+-- 3.List all the movies by their ratings in descending order ✓
+SELECT title, rating FROM movies INNER JOIN boxOffice where id = movie_id order by rating desc;
+
