@@ -81,6 +81,18 @@ FROM buildings as b
   LEFT JOIN employees as e   --left join becoz we want to include all buildings
     ON b.building_name = e.building;
 
+-- SQL Lesson 8: A short note on NULLs
+-- how to use null in the query
+-- 1.Find the name and role of all employees who have not been assigned to a building ✓
+SELECT e.name, e.role 
+from employees as e
+where e.building IS NULL
+-- 2.Find the names of the buildings that hold no employees
+Select DISTINCT b.building_name 
+ from buildings as b 
+ LEFT JOIN employees as e   --left join used becoz we want the names of  all building
+ON b.building_name = e.Building
+WHERE e.name IS NULL
 
 
 
