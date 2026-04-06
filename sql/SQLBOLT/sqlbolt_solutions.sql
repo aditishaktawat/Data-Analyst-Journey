@@ -68,3 +68,21 @@ SELECT title, international_sales,domestic_sales FROM boxOffice INNER JOIN movie
 -- 3.List all the movies by their ratings in descending order ✓
 SELECT title, rating FROM movies INNER JOIN boxOffice where id = movie_id order by rating desc;
 
+-- SQL Lesson 7: OUTER JOINs
+-- 1.Find the list of all buildings that have employees ✓
+SELECT DISTINCT building FROM employees;
+-- 2.Find the list of all buildings and their capacity ✓
+SELECT * FROM buildings;
+
+-- 3.List all buildings and the distinct employee roles in each building (including empty buildings) ✓
+-- left join = inner join + additional matching condition of left table
+SELECT DISTINCT b.building_name, e.role 
+FROM buildings as b
+  LEFT JOIN employees as e   --left join becoz we want to include all buildings
+    ON b.building_name = e.building;
+
+
+
+
+
+
