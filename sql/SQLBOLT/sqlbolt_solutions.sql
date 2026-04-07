@@ -151,5 +151,20 @@ FROM employees
 Group by role
 having role = "Engineer"  --specified for the engineer role only count years
 
+-- SQL Lesson 12: Order of execution of a Query
+1.FROM JOIN 2. WHERE 3. GROUP BY 4.HAVING 5.SELECT 7.DISTINCT 6.ORDER BY 7.LIMIT/OFFSET
+
+-- 1.Find the number of movies each director has directed ✓
+SELECT COUNT(title), director
+FROM movies
+GROUP BY director;
+
+-- 2.Find the total domestic and international sales that can be attributed to each director ✓
+SELECT m.director, SUM(b.domestic_sales + b.international_sales) as Total_sales
+FROM movies as m
+JOIN boxoffice as b
+ ON m.id = b.movie_id
+GROUP BY director;
+
 
 
