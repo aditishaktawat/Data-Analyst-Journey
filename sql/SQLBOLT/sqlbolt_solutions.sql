@@ -132,6 +132,24 @@ SELECT building,SUM(years_employed)
 from employees
 GROUP BY building;
 
+-- SQL Lesson 11: Queries with aggregates (Pt. 2)
+-- Using HAVING clause with GROUP BY to filter grouped rows from result set
+
+-- 1.Find the number of Artists in the studio (without a HAVING clause) ✓
+SELECT COUNT(role) 
+FROM employees
+where role ="Artist";
+
+--2.Find the number of Employees of each role in the studio ✓
+SELECT role,COUNT(name)
+FROM employees
+GROUP BY role;
+
+-- 3.Find the total number of years employed by all Engineers ✓
+SELECT Sum(years_employed)
+FROM employees
+Group by role
+having role = "Engineer"  --specified for the engineer role only count years
 
 
 
