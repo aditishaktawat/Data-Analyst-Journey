@@ -94,6 +94,26 @@ Select DISTINCT b.building_name
 ON b.building_name = e.Building
 WHERE e.name IS NULL
 
+-- SQL Lesson 9: Queries with expressions
+-- how to use alias as keyword and how to do mathematical calculations in query
+-- 1.List all movies and their combined sales in millions of dollars ✓
+SELECT title, (domestic_sales + international_sales) / 1000000 AS combined_sales_millions
+FROM movies
+  JOIN boxoffice   --inner join used becoz all movies sales is given
+    ON movies.id = boxoffice.movie_id;   --joining condition
+
+-- 2.List all movies and their ratings in percent ✓
+SELECT title, rating * 10 AS rating_percent   --if done (rating/10)*100 , then integer division can give error 
+--avoid division if possible  ***if imp to do dividion do /10.0
+FROM movies
+  JOIN boxoffice
+    ON movies.id = boxoffice.movie_id;
+
+--3. List all movies that were released on even number years ✓
+Select title
+from movies 
+ where (year%2.0) = 0   Reaminder = 0 for even no years
+
 
 
 
