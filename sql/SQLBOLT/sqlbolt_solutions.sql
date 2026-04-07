@@ -166,5 +166,21 @@ JOIN boxoffice as b
  ON m.id = b.movie_id
 GROUP BY director;
 
+-- SQL Lesson 13: Inserting rows
+-- INSERT INTO mytable
+-- (column, another_column, …)
+-- VALUES (value_or_expr, another_value_or_expr, …),
+--       (value_or_expr_2, another_value_or_expr_2, …),
+--       …;
+-- 1.Add the studio's new production, Toy Story 4 to the list of movies (you can use any director) ✓
+INSERT INTO movies
+ (Title,Director,Year,Length_minute)
+  VALUES ("Toy Story 4","Brad Bird",2026,106)
+
+-- 2.Toy Story 4 has been released to critical acclaim! It had a rating of 8.7, and made 340 million domestically and 270 million internationally. Add the record to the BoxOffice table. ✓
+INSERT INTO BoxOffice
+(movie_id,rating,domestic_sales,international_sales)
+ VALUES (15,8.7,340,270)
+
 
 
