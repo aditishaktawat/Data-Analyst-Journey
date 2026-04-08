@@ -205,6 +205,59 @@ UPDATE movies
      Director = "Lee Unkrich"
   WHERE id = 11;
 
-  
+-- SQL Lesson 15: Deleting rows
+-- DELETE FROM mytable
+-- WHERE condition;
+
+-- 1.This database is getting too big, lets remove all movies that were released before 2005. ✓
+DELETE from Movies
+ WHERE year <2005;
+
+-- 2.Andrew Stanton has also left the studio, so please remove all movies directed by him. ✓
+DELETE from movies 
+ WHERE director ="Andrew Stanton";
+
+
+-- SQL Lesson 16: Creating tables
+
+-- CREATE TABLE IF NOT EXISTS mytable (
+--     column DataType TableConstraint DEFAULT default_value,
+--     another_column DataType TableConstraint DEFAULT default_value,
+--     …
+-- );
+
+-- 1.Create a new table named Database with the following columns:
+-- – Name A string (text) describing the name of the database
+-- – Version A number (floating point) of the latest version of this database
+-- – Download_count An integer count of the number of times this database was downloaded
+-- This table has no constraints. ✓
+CREATE TABLE IF NOT EXISTS Database (
+ Name TEXT,
+ Version FLOAT,
+ Download_count INTEGER
+ );
+
+-- SQL Lesson 17: Altering tables
+ALTER is used to change the database. It supports ADD, DROP,RENAME ,etc
+-- 1.Add a column named Aspect_ratio with a FLOAT data type to store the aspect-ratio each movie was released in. ✓
+ALTER TABLE movies
+ADD Aspect_ratio FLOAT;
+
+-- 2.Add another column named Language with a TEXT data type to store the language that the movie was released in. Ensure that the default for this language is English. ✓
+ALTER TABLE movies
+ ADD Language TEXT
+  DEFAULT "English";
+
+
+-- SQL Lesson 18: Dropping tables
+-- DROP TABLE IF EXISTS mytable;
+
+-- 1.We've sadly reached the end of our lessons, lets clean up by removing the Movies table ✓
+DROP TABLE if exists movies;
+-- 2.And drop the BoxOffice table as well ✓
+DROP TABLE if exists Boxoffice;
+
+
+
 
 
