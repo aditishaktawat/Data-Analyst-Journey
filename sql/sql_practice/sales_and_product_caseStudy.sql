@@ -33,20 +33,33 @@ INNER JOIN customers as c ON s.customer_id = c.id
 WHERE s.lower(status) = 'completed'
 ORDER BY s.order_date ASC;
 
--- 5. Display the total no. of orders corresponding to eachdelievery status
+-- 5. Display the total no. of orders corresponding to each delievery status
 SELECT COUNT(order_id) AS total_orders, status
 FROM sales_order
 GROUP BY status;
 
--- if only asked to display all unique types of status- can be done using didtinct 
+-- if only asked to display all unique types of status- can be done using distinct 
 SELECT DISTINCT(status)
 FROM sales_order;  
 -- but GROUP BY is used to find extra informatiomn alsong witn unique values
 
+
+/*  ---BUISNESS INSIGHTS---
+
+*/
+
 -- 6.For orders purchasing more than 1 item, how many are still not completed ?
 SELECT count(product_id) AS not_completed
 FROM sales_order
-WHERE qyantity > 1 AND lower(status) != 'comleted';
+WHERE quantity > 1 AND lower(status) != 'comleted';
+
+
+/*  ---BUISNESS INSIGHTS---
+Incomplete multi-item orders are high-risk "Fulfillment Bottlenecks."
+Delays here lead to Revenue Leakage (cancellations) and increased Customer Churn.
+Priority should be placed on clearing these to protect the company’s Brand Reputation. 
+*/
+
 
 -- 7.Find thr total no of orders corresponding to each deleivery status by ignoring the case on delevery status.
 -- Status with highest no of orders shoukd be at the top.
