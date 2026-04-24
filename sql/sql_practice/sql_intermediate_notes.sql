@@ -25,7 +25,7 @@ JOIN (select avg(salary) sal from employee ) avg_sal
 
 --MULTIPLE ROW SUBQUERY - 
 --subquery which return muiltiple column and multiple row
---subquery which return only 1 colimn and multiple rows.
+--subquery which return only 1 column and multiple rows.
 
 /* Ques- Find the employees who earn the highest salary in each department */
 
@@ -149,6 +149,58 @@ SELECT store_name, SUM(quantity) --total items sold by each store
 FROM sales
 GROUP BY store_name
 HAVING SUM(quantity) > (select avg(quantity) from sales);
+
+
+---SQL COMMANDS WHICH ALLOW SUBQUERY---
+- SQL QUERY 
+- INSERT
+- UPDATE
+- DELETE
+
+-- INSERT
+
+/* QUES: Insert data into employee history table. Make sure not insert duplicate recorde. */
+
+--Requirement- The data is already present in some other tables and we want to just propagate it to this table.
+
+INSERT into employee_history
+ SELECT e.emp_id, e.emp_name, d.dept_name, e.salary, d.location
+ FROM employee e
+ JOIN department d ON e.emp_id = d.dept_id   --inserting data from empl and dept table into emp_history table
+ WHERE NOT EXISTS(              --to check for duplicate data
+                   SELECT 
+                   FROM employee_history eh    
+                   WHERE eh.emp_id = e.emp_id   
+                  ) 
+--if emp_id already present in emp_his table then this query will return some output which whill make the non exist condition false
+--and hence the whole query will not run and nothing will be inserted in emp_his table.
+
+
+-- UPDATE
+
+/* QUES - Give 10% increment to all employees in Banglore location based on
+  maximun salary earned by an emp in each dept. Only consider employees in emp_history table. */
+
+UPDATE employee e  --outer query
+SET salary = (Select MAX(salary) + (MAX(salary) * 0.1)  --corelateed subquery
+              FROM employee_history eh
+              WHERE eh.dept_name = e.dept_name)
+WHERE e.dept_name IN ( SELECT dept_name   --multiple row subquery
+                        FROM department 
+                        WHERE location = 'Bangalore')
+and emp_id in (select emp_id from employee_history);    --only consider empl in emp_history table
+
+
+--DELETE
+/* QUES - Delete all departments who do not have any employees. */
+
+DELETE FROM department
+WHERE dept_name IN (SELECT dept_name
+                  FROM department d
+                  WHERE NOT EXISTS ( SELECT 1 
+                                    FROM employee e 
+                                    WHERE e.emp_name = d.dept_name)
+                                    );  
 
 
 
