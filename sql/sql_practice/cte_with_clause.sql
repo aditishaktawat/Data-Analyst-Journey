@@ -14,7 +14,7 @@ FROM employees e, average_salary av
 WHERE e.salary > av.avg_sal;
 
 /* 
-QUES - Find stores who's sales where better than the average sales across all stores
+QUES - Find stores who's sales were better than the average sales across all stores
 
 --using subquery
 -- 1.find total sales for each store. --Total_Sales
@@ -53,7 +53,7 @@ ON total_sales.total_sales_per_store > avg_sales.avg_sales_for_all_stores
 
 --writing above query using WITH clause
 
-WITH total_sales (store_id, total_sales_per_store) AS   --with clause to find total sales of each store
+WITH total_sales (store_name, total_sales_per_store) AS   --with clause to find total sales of each store
       ( SELECT s.store_name, SUM(cost) AS total_sales_per_store
         FROM sales s
         GROUP BY s.store_name ),
@@ -85,4 +85,4 @@ stored in the temporarily table and then can be fetched in the main memory from 
 WHEN to use WITH clause
 - when particularly using the subquery multiple times in the statement
 - when writing big/complex query
-- when working on millions of data and want to work on only 1000s of data from it.
+- when working on millions of data and want to work on only 1000s of data from it. 
