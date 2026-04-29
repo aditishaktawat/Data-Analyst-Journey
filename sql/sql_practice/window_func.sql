@@ -116,3 +116,108 @@ CASE WHEN e.salary > LAG(salary) OVER (PARTITION BY dept_name ORDER BY emp_id ) 
 FROM employees e ;
 
 
+--6. FIRST_VALUE() - extract first column value from the partition set
+
+/* QUES - Fetch the most expensive product under each category (corresponding to each record) */
+
+SELECT * ,
+FIRST_VALUE(product_name) OVER (PARTITION BY product_category ORDER BY price DESC) AS most_exp_prod
+FROM product;
+
+
+--7. LAST_VALUE() - Fetch last record from the partition
+
+/* QUES- Write query to display the least expensive product under each category (corresponding to each record) */
+
+SELECT *,
+LAST_VALUE(product_name) OVER (PARTITION BY product_category ORDER BY price DESC) as least_exp_prod
+FROM product;  
+ ---not giving the right ans due to default FRAME clause
+
+
+-- FRAME CLAUSE- 
+-- Default frame clause -- RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+  
+/* RANGE- What is the range of products that this function(last_value) needs to consider
+   UNBOUNDED - From the very first row of the partition
+   PRECEDING - rowd before it
+   CURRENT ROW - till the current record
+
+Functions afftected by frame clause are- 
+Last_value() , ntile() , aggregate func
+
+--Default frame adjusted into 
+
+-- RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+can also modify as - 
+ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+ROWS - what are the differnt rows we need to consider
+
+-Difference betweem rows and range -
+For duplicate records - 
+range --- row - range will consider  full frame and all the duplicate data and then will print the last _value
+row - row - row will not think of duplicate data and consider only upto current row
+
+- More specification-
+ range between 2 proceeding and 2 following - means consider 2 rows prior the current row and 2 rows after the current row
+*/
+
+SELECT *,
+LAST_VALUE(product_name)
+    OVER (PARTITION BY product_category ORDER BY price DESC
+     --   RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)  --becoz of this last_value() will return wrong anse for the every row
+        RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)  --now right ans can be extracted
+        as least_exp_prod
+FROM product;
+
+
+SELECT *,
+LAST_VALUE(product_name)
+    OVER (PARTITION BY product_category ORDER BY price DESC
+       -- RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)  --now right ans can be extracted
+        ROW BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+    as least_exp_prod
+FROM product;
+
+
+--ALternate way of writing WINDOW func- 
+
+/* QUES -Write query to display the least expensive product , most expensive product
+ under 'PHONE' category (corresponding to each record) */
+
+SELECT * ,
+FIRST_VALUE (product_name)
+   OVER ( PARTITION BY product_category ORDER BY price)
+    as most_exp_prod,
+LAST_VALUE (product_name) 
+   OVER ( PARTITION BY product_category ORDER BY price
+   RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+    as least_exp_prod
+FROM products
+WHERE product_category = 'Phone';
+
+
+--taking lot of space
+SELECT * ,
+FIRST_VALUE (product_name)
+   OVER w as most_exp_prod,
+LAST_VALUE (product_name) 
+   OVER w as least_exp_prod
+FROM products
+WHERE product_category = 'Phone';
+WINDOW  w AS ( PARTITION BY product_category ORDER BY price DESC
+             RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+
+
+--8. NTH_VALUE() - Fetch a value from any nth position we specify
+
+--QUES- Write a query to display third most expensive product under each category.
+SELECT * ,
+FIRST_VALUE (product_name) OVER w as most_exp_prod,
+NTH_VALUE(product_name, 3) OVER w as second_most_exp_prod
+-- if the nth row doesnt exist, it will return NULL 
+
+FROM products
+WHERE product_category = 'Phone';
+WINDOW  w AS ( PARTITION BY product_category ORDER BY price DESC
+             RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) --imp to specify for nth_value
