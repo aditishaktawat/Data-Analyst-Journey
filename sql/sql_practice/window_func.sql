@@ -221,3 +221,62 @@ FROM products
 WHERE product_category = 'Phone';
 WINDOW  w AS ( PARTITION BY product_category ORDER BY price DESC
              RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) --imp to specify for nth_value
+
+
+--9. NTILE() - Groups together different set of rows into buckets under window and each bucket will have equal no of rows
+
+/* QUES - Write a query to segregate all the expensive phones, mod range phones and cheaper phones. */
+
+SELECT product_name,
+CASE WHEN x.buckets = 1 THEN 'Expensive Phones',
+     WHEN x.buckets = 2 THEN 'Mid Range Phones',
+     WHEN x.buckets = 3 THEN 'Cheaper Phones'
+  END phone_category
+FROM (
+    SELECT *,
+    NTILE(3) OVER (ORDER BY price DESC) AS buckets --10 records -> divided into bucket 1- (row 1-4), bucket 2-(row5-7), bucket 3-(row8-10)
+    FROM products
+    WHERE product_category = 'Phone') AS x;
+
+/*
+--10. CUME_DIST() - Ued to calculate Distribution Percentage of each record wrt all the rows within result set
+
+   Value --> 1 <= CUME_DIST > 0
+    
+Formula = current row no (or row no with value same as current row) / Total No. of rows
+
+### for duplicate rows - consider row no of last duplicate row for all commom data / Toal no of rows
+
+/* QUES- Fetch all products which are constituting the first 30% of the data in products table based on price. */
+*/
+
+SELECT product_name , (cum_percent_dist|| '%') as cum_percent_dist
+FROM (
+    SELECT * ,
+    CUME_DIST() OVER (ORDER BY price DESC) AS cum_distribution
+    round(CUME_DIST() OVER (ORDER BY price DESC) :: numeric * 100, 2) AS cum_percent_dist
+   --percentage calculated and rounded upto 2 decimal
+    FROM products ) x
+WHERE x.cum_percent_dist <= 30;
+
+
+-- 11. PERCENT_RANK() - Relative rank of each row in form of percentage
+ /*  
+ -- Valvue b/w - 0(first record) to 1(last record)
+
+ ### Formula = Current Row No -1 / Total no of rows - 1  
+
+QUES - Identify how much percentage more expensive is "Galaxy Z Fold" when compared to all products.
+
+*/
+
+SELECT product_name, percent_rank 
+FROM (
+    SELECT *,
+    PERCENT_RANK() OVER (ORDER BY price)  as per_rank   --in decimal form
+    round(PERCENT_RANK() OVER (ORDER BY price) :: numeric * 100, 2) as percent_rank   --concevted into percentage
+    FROM products
+) x
+WHERE x.product_name = 'Galaxy Z Fold';
+
+--ANS 80.77 -> Galaxy Z Fold is 80.77 % more expensive than all the products of table
