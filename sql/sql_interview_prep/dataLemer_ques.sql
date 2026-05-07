@@ -79,3 +79,37 @@ Whether through technical expertise or high sales commissions, their pay reflect
 It’s a clear signal of who the department's most critical assets are.
 */
 
+-- QUESTION: Second Day Confirmation [TikTok SQL]
+-- STATUS: REVISIT   
+-- 10 min
+
+SELECT DISTINCT(e.user_id)
+FROM emails e
+JOIN texts t ON e.email_id = t.email_id
+WHERE t.signup_action = 'Confirmed' 
+  AND t.action_date = e.signup_date + INTERVAL '1 DAY';   --Interval func used to find 2nd day login
+
+/* BUISNESS INSIGHTS:
+A consistent 24-hour lag in the action_date strongly suggests our confirmation emails are being caught in spam filters,
+or our SMS vendor is batching texts at the end of the day.
+Engineering must audit deliverability rates to ensure real-time account activation.
+*/
+
+
+-- QUESTION: Average Review Ratings [AMAZON]
+-- STATUS: DONE
+-- 5 min
+
+SELECT EXTRACT(MONTH FROM submit_date) AS mth,
+ product_id, 
+ ROUND(AVG(stars),2) AS avg_stars
+FROM reviews
+GROUP BY EXTRACT(MONTH FROM submit_date),  --cant use alias mth as Group by clause work before SELECT clause
+product_id
+ORDER BY mth, product_id;
+
+/* BUISNESS INSIGHTS:
+Monthly Sentiment Trends: By tracking average stars month-over-month, we can identify 'Product Fatigue.'
+If a top-rated product's score drops during a high-volume month like December,
+it suggests the logistics or packaging couldn't handle the scale, leading to customer frustration.
+*/
