@@ -113,3 +113,24 @@ Monthly Sentiment Trends: By tracking average stars month-over-month, we can ide
 If a top-rated product's score drops during a high-volume month like December,
 it suggests the logistics or packaging couldn't handle the scale, leading to customer frustration.
 */
+
+
+
+-- QUESTION: Teams Power Users [MICROSOFT]
+-- STATUS: REVISIT
+-- 10 min
+
+SELECT sender_id, COUNT(message_id) as message_count
+FROM messages
+WHERE sent_date >= '08/01/2022' AND sent_date < '08/03/2022' --less time complexity,performs Index Range Scan
+ --EXTRACT(MONTH FROM sent_date)= '8' AND EXTRACT(YEAR FROM sent_date)= '2022' -- performs Full Table Scan
+GROUP BY sender_id
+ORDER BY message_count DESC
+LIMIT 2;
+
+/*
+Power User Engagement:
+This identifies our 'Power Users'—the top 0.1% of the population driving platform stickiness.
+By identifying who sends the most messages, we can study their behavior to build 'Templates' or 'Quick Replies' that help average users reach the same level of engagement.
+If these top users suddenly stop messaging, it’s an early warning for Churn among our most valuable cohort.
+*/
