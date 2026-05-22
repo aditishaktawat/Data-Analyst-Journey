@@ -5,7 +5,9 @@ Welcome to my advanced Excel portfolio. This directory documents my transition f
 ## 🗂️ Core Frameworks & Modules
 
 * **[⚡ Power Query ETL Pipelines](./Power_Query_ETL_Pipelines/)**
-  Production-grade data ingestion engines connecting directly to live external web structures and processing nested, unstructured raw enterprise assets.
+  Production-grade data ingestion engines connecting directly to live external web structures and processing nested, unstructured raw enterprise assets into relational tables.
+  * **[HR Data Automation Pipeline](./Power_Query_ETL_Pipelines/Automating_Messy_HR_Data.md):** Sanitization of highly corrupted corporate logs using dynamic unpivoting and data-typing, eliminating manual formatting overhead.
+  * **[Olympic Web Scraping & Feature Engineering](./Power_Query_ETL_Pipelines/Olympic_Medal_Web_Scraping_ETL.md):** Live HTML DOM extraction engine handling complex row-spans, augmented with a custom mathematical `Weighted_Performance_Index` to normalize athletic distribution.
 
 * **[🧬 Dynamic Array Formulas & Lookups](./Dynamic_Array_Formulas/)**
   Advanced multi-sheet analysis utilizing native dynamic array engines (`FILTER`, `UNIQUE`, `SORT`) and scalable lookup vectors to replace volatile legacy formulas.
