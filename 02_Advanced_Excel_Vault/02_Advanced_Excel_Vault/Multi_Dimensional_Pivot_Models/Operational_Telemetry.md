@@ -58,3 +58,18 @@ This repository contains two parallel multi-dimensional analytical layers target
 * **Business Objective:** Generate data-backed hiring recommendations for the upcoming fiscal cycle based on historical burnout trends.
 * **Technical Architecture:** Constructed a chronologically mapped workload matrix (Jan-Dec) filtering for volume thresholds per representative. 
 * **Business Impact:** Translated raw pivot counts directly into prescriptive business logic (e.g., triggering explicit headcount acquisition signals for Agent R02 in Q2 and Agent R03 in Q4).
+
+---
+
+## 🎯 Phase IV: Customer Segmentation & Agent Training
+* **Target Workbook:** `call_centre_customer_insights.xlsx`
+
+### 11. Identifying "Time Waster" Customers (Scatter Plot Analysis)
+* **Goal:** Find out which customers take up a lot of support time but spend very little money.
+* **How I did it:** I built a pivot table summarizing the total number of calls and the total purchase amount for each customer (C0001 - C0015). 
+* **Visual Insight:** I used a **Scatter Graph** to plot Call Volume against Purchase Amount. This made it incredibly easy to visually segment customers into groups like "Ideal" (high spend, low calls) and "Low Value / Time Wasters" (high calls, low spend).
+
+### 12. Identifying Agents for CSAT Training
+* **Goal:** Figure out which customer service representatives need additional training based on their Customer Satisfaction (CSAT) scores.
+* **How I did it:** I created a cross-tab pivot table showing the average CSAT rating for each representative (R01 to R05), broken down month-by-month. 
+* **Business Impact:** Instead of looking at overall averages which can hide bad months, this monthly breakdown makes it easy to spot reps who are consistently scoring poorly or dropping in performance over time.
