@@ -40,3 +40,21 @@ This repository contains two parallel multi-dimensional analytical layers target
 ### 7. Cumulative YTD Financial Accumulation
 * **Objective:** Calculate compounding performance totals across the fiscal timeline.
 * **Technical Architecture:** Applied advanced "Show Values As" execution properties to calculate continuous Year-to-Date (YTD) running sum vectors over the dataset.
+
+---
+
+## 🧑‍💻 Phase III: Resource Allocation & Behavioral Correlation (Milestones 8–10)
+* **Target Workbook Engine:** `call_centre_resource_allocation.xlsx`
+
+### 8. Weekly Volatility Index & Capacity Planning
+* **Business Objective:** Identify weekly peak volume days to optimize agent scheduling.
+* **Technical Architecture:** Deployed a cross-tabular pivot matrix utilizing `% of Row Total` calculation layers. This normalized workload distributions across individual representatives (R01-R05), bypassing raw volume bias to reveal true percentage-based workload stress on weekends vs. weekdays.
+
+### 9. CSAT vs. Handling Time (Correlation Matrix)
+* **Business Objective:** Determine the statistical relationship between prolonged Call Duration and Customer Satisfaction (CSAT) degradation.
+* **Technical Architecture:** Intersected dimensional duration buckets against ordinal CSAT scales (0-5). The resulting distribution matrix exposed negative sentiment drift during high-duration interactions, providing actionable proof for stricter call-resolution time targets.
+
+### 10. Predictive Staffing & Prescriptive Headcount Modeling
+* **Business Objective:** Generate data-backed hiring recommendations for the upcoming fiscal cycle based on historical burnout trends.
+* **Technical Architecture:** Constructed a chronologically mapped workload matrix (Jan-Dec) filtering for volume thresholds per representative. 
+* **Business Impact:** Translated raw pivot counts directly into prescriptive business logic (e.g., triggering explicit headcount acquisition signals for Agent R02 in Q2 and Agent R03 in Q4).
