@@ -17,3 +17,4 @@ Welcome to my advanced Excel portfolio. This directory documents my transition f
   * **Phase I (Volumetric Segments):** [Workbook Matrix](./Multi_Dimensional_Pivot_Models/call_centre_volumetric_analysis.xlsx) focusing on customer metrics & QA drift.
   * **Phase II (Temporal Dynamics):** [Workbook Matrix](./Multi_Dimensional_Pivot_Models/call_centre_temporal_aggregations.xlsx) focusing on time-series bucketing & YTD accumulation.
   * **Phase III (Resource Allocation):** [Workbook Matrix](./Multi_Dimensional_Pivot_Models/call_centre_resource_allocation.xlsx) focusing on prescriptive headcount planning & CSAT correlation.
+  * **Phase IV (Customer Insights):** [Workbook Matrix](./Multi_Dimensional_Pivot_Models/call_centre_customer_insights.xlsx) utilizing scatter plot matrix visualizers to segment high-value accounts vs. time-wasters.
