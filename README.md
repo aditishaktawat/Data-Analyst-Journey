@@ -18,6 +18,8 @@ Completed the SQLBOLT lectures 1-5 and learnt how the basic opearators are used 
 * [cite_start]**Spill-Anchored Scaling:** Implemented dynamic arrays via nested `SORT(FILTER())` logic[cite: 1516].
 * [cite_start]**Multi-Criteria Vectors:** Executed targeted cohort isolation utilizing Boolean `*` operators for conditional matrix filtering[cite: 1516].
 * [cite_start]**Automated Dashboards:** Integrated dynamic medians and female representation ratios with live conditional data bars mapping percentage drift[cite: 1543, 1609].
+* **🧬 Functional Programming Engine (LET, LAMBDA, MAP, SCAN): Memory-optimized array calculations and custom recursive logic.
+
 
 ### 3. Multi-Dimensional Pivot Models (`02_Advanced_Excel_Vault/Multi_Dimensional_Pivot_Models/`)
 [cite_start]Transitioned from flat-file formulas to semantic aggregation layers to track operational metrics[cite: 1789, 1792].

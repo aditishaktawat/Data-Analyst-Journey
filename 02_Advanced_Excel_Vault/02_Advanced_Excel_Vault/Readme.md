@@ -11,6 +11,8 @@ Welcome to my advanced Excel portfolio. This directory documents my transition f
 
 * **[🧬 Dynamic Array Formulas & Lookups](./Dynamic_Array_Formulas/)**
   Advanced multi-sheet analysis utilizing native dynamic array engines (`FILTER`, `UNIQUE`, `SORT`) and scalable lookup vectors to replace volatile legacy formulas.
+  
+  🧬 Functional Programming Engine (LET, LAMBDA, MAP, SCAN): Memory-optimized array calculations and custom recursive logic.
 
 * **[📈 Multi-Dimensional Pivot Models](./Multi_Dimensional_Pivot_Models/)**
   Enterprise-grade analytical aggregation engines split across two distinct modeling layers:
