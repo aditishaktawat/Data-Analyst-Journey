@@ -20,3 +20,19 @@ This module demonstrates the transition from standard cell-based spreadsheet cal
 
 ### 3. Dynamic Array Spilling 
 * **Technical Approach:** Replaced legacy single-cell formulas with native array engines (`FILTER`, `SORT`, `TAKE`) that dynamically spill results into adjacent matrices based on boolean logic arrays.
+
+---
+
+## 📈 Applied Business Use Cases
+
+### Case Study 1: Algorithmic Target Tracking (Leads Per Day)
+* **Business Problem:** Tracking real-time representative performance telemetry to identify the exact date a "500 Lead" threshold was breached, alongside daily average velocity.
+* **Functional Solution:** Used the `SCAN` function to iterate through the dataset and generate a dynamic running total array. Combined this with `FILTER` and `TAKE` to extract the exact milestone date without requiring manual helper columns.
+
+### Case Study 2: Iterative Multi-Currency Conversions (FX Converter)
+* **Business Problem:** Executing historical foreign exchange conversions across mixed currency ledgers (USD, AUD, EUR, INR) using varying daily exchange rates.
+* **Functional Solution:** Deployed `MAP` and `LAMBDA` to pass arrays through custom logic blocks, applying strict row-level arithmetic transformations to calculate the normalized NZD amounts dynamically.
+
+### Case Study 3: Cross-Column Dynamic Search Engine
+* **Business Problem:** Creating a fast, user-facing lookup tool that scans the entire employee database regardless of whether the user inputs an Employee ID, Name, or Job Title.
+* **Functional Solution:** Engineered a dynamic spilling array using `FILTER` combined with `ISNUMBER` and `SEARCH` across multiple columns. This bypasses the strict left-to-right limitations of `VLOOKUP` and the single-column constraints of basic `XLOOKUP`.
