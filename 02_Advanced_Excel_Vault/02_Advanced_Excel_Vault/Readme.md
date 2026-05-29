@@ -20,3 +20,12 @@ Welcome to my advanced Excel portfolio. This directory documents my transition f
   * **Phase II (Temporal Dynamics):** [Workbook Matrix](./Multi_Dimensional_Pivot_Models/call_centre_temporal_aggregations.xlsx) focusing on time-series bucketing & YTD accumulation.
   * **Phase III (Resource Allocation):** [Workbook Matrix](./Multi_Dimensional_Pivot_Models/call_centre_resource_allocation.xlsx) focusing on prescriptive headcount planning & CSAT correlation.
   * **Phase IV (Customer Insights):** [Workbook Matrix](./Multi_Dimensional_Pivot_Models/call_centre_customer_insights.xlsx) utilizing scatter plot matrix visualizers to segment high-value accounts vs. time-wasters.
+
+### 📞 Enterprise Call Centre Telemetry (Capstone Dashboard)
+* **Status:** Completed & Deployed
+* **The Objective:** Transformed 1,000 raw operational call records into a single-pane executive tracking interface to monitor resource allocation and customer lifetime value.
+* **The Architecture:** 
+  * Built a macro-free interactive UI using High-Signal Minimalism (muted canvas, Segoe UI typography).
+  * Engineered dynamic slicers mapping Representative efficiency against CSAT and revenue generation.
+  * Deployed sorted arrays isolating top-tier high-value accounts from operational time-wasters.
+* **[Link to Dashboard Documentation & UI Asset](./02_Advanced_Excel_Vault/Call_Centre_Analytics/Call_Centre_Telemetry_Dashboard.md)**
