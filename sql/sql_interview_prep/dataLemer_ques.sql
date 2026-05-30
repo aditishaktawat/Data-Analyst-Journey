@@ -115,7 +115,6 @@ it suggests the logistics or packaging couldn't handle the scale, leading to cus
 */
 
 
-
 -- QUESTION: Teams Power Users [MICROSOFT]
 -- STATUS: REVISIT
 -- 10 min
@@ -133,4 +132,49 @@ Power User Engagement:
 This identifies our 'Power Users'—the top 0.1% of the population driving platform stickiness.
 By identifying who sends the most messages, we can study their behavior to build 'Templates' or 'Quick Replies' that help average users reach the same level of engagement.
 If these top users suddenly stop messaging, it’s an early warning for Churn among our most valuable cohort.
+*/
+
+
+-- QUESTION: Final Account Balance [PAYPAL]
+-- STATUS: REVISIT
+-- 8 min
+SELECT account_id,
+SUM(
+CASE WHEN transaction_type = 'Deposit' THEN amount
+ELSE -amount
+End) AS final_balance
+FROM transactions
+Group BY account_Id;
+
+
+
+-- QUESTION: IBM db2 Product Analytics [IBM]
+-- STATUS: REVISIT
+-- 18 min
+
+WITH employee_queries AS (
+
+SELECT e.employee_id, COALESCE(COUNT(DISTINCT (q.query_id)),0)as unique_queries
+FROM employees as e 
+LEFT JOIN queries as q ON e.employee_id = q.employee_id 
+ AND q.query_starttime >= '07/01/2023 00:00:00' 
+ AND q.query_starttime < '10/01/2023 00:00:00'
+GROUP BY e.employee_id
+)
+
+SELECT unique_queries, Count(employee_id) AS emp_count
+FROM employee_queries
+GROUP BY unique_queries
+Order By unique_queries;
+
+/*
+BUISNESS INSIGHTS:
+This query measures tool adoption and identifies power users:
+-The "0 Queries" Bucket: If this number is massive, it means we have an adoption problem.
+We are paying for a tool (or paying employees) and it is sitting untouched.
+It signals a need for better onboarding or training.
+
+-The "Power Users" Bucket: If a small group of employees runs 50+ queries while everyone else runs 2,
+those are our "power users."
+The business can talk to them to understand what they are finding so valuable, and use those learnings to train the rest of the team.
 */
