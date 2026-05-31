@@ -34,3 +34,16 @@ Transitioned from flat-file formulas to semantic aggregation layers to track ope
   * Engineered dynamic slicers mapping Representative efficiency against CSAT and revenue generation.
   * Deployed sorted arrays isolating top-tier high-value accounts from operational time-wasters.
 * **[Link to Dashboard Documentation & UI Asset](./02_Advanced_Excel_Vault/Call_Centre_Analytics/Call_Centre_Telemetry_Dashboard.md)**
+
+
+## 📊 Phase 3: Power BI & Semantic Data Modeling
+Transitioning from in-memory arrays to enterprise-scale semantic models, utilizing DAX, Star Schemas, and interactive UI design.
+
+### 🌍 Global Revenue Telemetry
+* **Status:** Completed & Deployed
+* **The Objective:** Built a dynamic tracking interface to monitor $27.72M in global sales, segmenting product performance and regional market share.
+* **The Architecture:** 
+  * Deployed geographical Treemaps to isolate high-value international markets (UK & USA).
+  * Engineered a time-series trajectory model to track monthly revenue cyclicality.
+  * Built a workforce velocity matrix to identify top-performing sales representatives.
+* **[View Full Power BI Documentation & Dashboard UI](./03_Power_BI_Analytics/Global_Revenue_Telemetry.md)**
