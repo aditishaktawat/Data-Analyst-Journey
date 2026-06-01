@@ -47,3 +47,12 @@ Transitioning from in-memory arrays to enterprise-scale semantic models, utilizi
   * Engineered a time-series trajectory model to track monthly revenue cyclicality.
   * Built a workforce velocity matrix to identify top-performing sales representatives.
 * **[View Full Power BI Documentation & Dashboard UI](./03_Power_BI_Analytics/Global_Revenue_Telemetry.md)**
+
+### 🧠 Advanced DAX Reference Library & Filter Context
+* **Status:** Completed
+* **The Objective:** Developed a semantic layer tracking advanced sales vectors, implementing strict filter override behaviors and conditional logic.
+* **The Architecture:**
+  * Mitigated runtime division faults using safe execution layers (`DIVIDE`).
+  * Engineered complex context overrides via `CALCULATE` mapping cross-table constraints (Salesperson, Category, and Temporal matrices).
+  * Built tiered performance ranking matrices using optimized `SWITCH(TRUE())` engines.
+* **[View Full DAX Repository Logic](./03_Power_BI_Analytics/DAX_Calculations_Logs.md)**
