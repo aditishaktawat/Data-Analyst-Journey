@@ -79,3 +79,45 @@ SWITCH(
     "🔴"
 )
 
+// Unique Transaction Tracking
+Total_Unique_Shipments = DISTINCTCOUNT(Sales[Shipment_ID])
+
+// Category-Specific Volume Isolation
+Bites_Category_Shipments = 
+CALCULATE(
+    [Total_Unique_Shipments],
+    Products[Category] = "Bites"
+)
+
+// Conditional Volume Thresholds
+Low_Box_Shipments = 
+CALCULATE(
+    [Total_Unique_Shipments],
+    Sales[Boxes] < 50
+)
+
+// Temporal Day-of-Week Extraction
+Friday_Revenue = 
+CALCULATE(
+    [Total Revenue],
+    calendar[Day_Of_Week] = "Friday"
+)
+
+## 🚀 4. Performance Optimization via Variables (`VAR`)
+Transitioned from repetitive sub-query execution to variable-based memory caching. This reduces the load on the VertiPaq engine by storing intermediate results in volatile memory before executing the final mathematical return.
+
+
+// Caching values in memory before execution
+
+Dynamic_Profit_Analysis = 
+VAR Current_Sales = [Total Revenue]
+VAR Current_Cost = SUM(Sales[Total_Cost])
+VAR Net_Profit = Current_Sales - Current_Cost
+RETURN
+    DIVIDE(Net_Profit, Current_Sales, 0)
+
+// ❌ Calculated Column (Row Context) - Consumes physical RAM/Storage
+Profit_Column = Sales[Revenue] - Sales[Cost] 
+
+// ✅ DAX Measure (Filter Context) - Computes dynamically on CPU at runtime
+Profit_Measure = SUM(Sales[Revenue]) - SUM(Sales[Cost])
