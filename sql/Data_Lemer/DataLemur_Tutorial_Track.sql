@@ -61,9 +61,48 @@ LIMIT 5;
 -- SECTION 2: INTERMEDIATE LOGIC (CTEs & Joins)
 -- ==========================================
 
+-- AGGREGATE FUNCTIONS - SUM, COUNT, MIN, MAX, AVG
+SELECT COUNT(*),SUM(total_sales)
+FROM pharmacy_sales
+WHERE manufacturer = 'Pfizer';
 
+SELECT avg(open)
+FROM stock_prices
+WHERE ticker = 'GOOG';
 
+SELECT MIN(open)
+FROM stock_prices
+WHERE ticker = 'MSFT';
 
+SELECT MAX(open)
+FROM stock_prices
+WHERE ticker ='NFLX';
+
+--GROUO BY Clause
+SELECT ticker, MIN(open)
+FROM stock_prices
+GROUP BY ticker
+order by min desc;
+
+SELECT skill,count(candidate_id)
+FROM candidates
+GROUP by skill
+order by count desc;
+
+--HAVING Clause
+SELECT ticker,min(open) as min_open
+FROM stock_prices
+Group by ticker having min(open) > 100
+order by min_open desc;
+
+SELECT candidate_id
+FROM candidates
+GROUP BY candidate_id HAVING Count(skill) > 2 ;
+
+--DISTINCT Clause
+SELECT category, Count(DISTINCT(product)) as count
+FROM product_spend
+Group by category;
 
 
 
