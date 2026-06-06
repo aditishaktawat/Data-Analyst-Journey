@@ -178,3 +178,70 @@ It signals a need for better onboarding or training.
 those are our "power users."
 The business can talk to them to understand what they are finding so valuable, and use those learnings to train the rest of the team.
 */
+
+
+-- QUESTION: Pharmacy Analytics (Part 1) [CVS HEALTH]
+-- STATUS: DONE
+-- 8 min
+SELECT drug,
+(total_sales - cogs) as total_profit
+FROM pharmacy_sales
+order by total_profit desc
+limit 3;
+
+/* BUISNESS INSIGHTS:
+Used to find the top 3 most profitable drugs we are selling.
+*/
+
+
+-- QUESTION: Pharmacy Analytics (Part 2) [CVS HEALTH]
+-- STATUS: REVISIT
+-- 10 min
+
+/*1.Find total loss
+ 2. check condition for loss - cost > selling price
+ 3. Group by manufacturer
+*/
+SELECT manufacturer,
+COUNT(drug) as drug_count,
+SUM(cogs-total_sales) as total_loss
+FROM pharmacy_sales
+WHERE cogs>total_sales 
+GROUP BY manufacturer
+ORDER by total_loss desc;
+
+/*  BUISNESS INSIGHTS- 
+Identifies the manufacturers driving the highest financial losses and the count of unprofitable drugs they produce.
+This data is critical for prioritizing reviews of pricing strategies, manufacturing costs (COGS), and potential supply chain inefficiencies.
+*/
+
+-- QUESTION: Cards Issued Difference [JP MORGAN]
+-- STATUS: DONE
+-- 4 min
+
+SELECT card_name,
+(MAX(issued_amount) - MIN(issued_amount)) as difference
+FROM monthly_cards_issued
+GROUP BY card_name
+ORDER BY difference DESC;
+
+/* BUISNESS INSIGHT -
+Identifies which credit cards have the most unstable issuance rates by finding the difference between their best and worst performing months.
+This helps marketing teams identify which credit cards are highly seasonal or driven by short-term promotional campaigns (high variance)
+versus those with steady, organic growth (low variance).
+*/
+
+--SQL Math Practice Exercise: Big-Mover Months
+--STATUS: REVISIT
+-- 15 min
+SELECT ticker,
+COUNT(date) as count
+FROM stock_prices
+WHERE (close - open)/open > 0.10 OR (close - open)/open <-0.10
+GROUP BY ticker
+ORDER BY count desc;
+
+/* BUISNESS INSIGHT -
+Identifies the most volatile stocks by counting the frequency of extreme daily price swings (greater than 10%).
+This is critical for risk management, allowing analysts to flag high-risk assets within a portfolio and which companies have the most unstable stock prices.
+*/
