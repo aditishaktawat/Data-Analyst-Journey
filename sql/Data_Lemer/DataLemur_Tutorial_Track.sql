@@ -104,7 +104,12 @@ SELECT category, Count(DISTINCT(product)) as count
 FROM product_spend
 Group by category;
 
-
+--MATH Functions
+SELECT drug,
+  CEIL(total_sales / units_sold) as unit_cost
+FROM pharmacy_sales
+WHERE manufacturer ='Merck'
+ORDER BY unit_cost;
 
 
 
