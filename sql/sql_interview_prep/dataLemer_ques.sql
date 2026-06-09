@@ -245,3 +245,22 @@ ORDER BY count desc;
 Identifies the most volatile stocks by counting the frequency of extreme daily price swings (greater than 10%).
 This is critical for risk management, allowing analysts to flag high-risk assets within a portfolio and which companies have the most unstable stock prices.
 */
+
+-- Cities With Completed Trades [ Robinhood ]
+--STATUS : DONE
+-- 10 min
+
+SELECT u.city,
+  COUNT(t.order_id) as total_orders
+FROM trades t
+JOIN users u ON t.user_id = u.user_id 
+WHERE status = 'Completed'
+GROUP BY city 
+Order BY total_orders DESC
+LIMIT 3;
+
+/* BUISNESS INSIGHT -
+Identifies the top 3 cities with the highest transaction volume.
+Helps marketing and operations teams target and allocate resources to our highest-demand urban markets.
+*/
+ 

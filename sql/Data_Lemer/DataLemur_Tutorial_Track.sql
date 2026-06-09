@@ -111,6 +111,20 @@ FROM pharmacy_sales
 WHERE manufacturer ='Merck'
 ORDER BY unit_cost;
 
+--CASE 
+SELECT actor, character, platform, avg_likes,
+  CASE WHEN avg_likes >= 15000 THEN 'Super Likes'
+      WHEN avg_likes >= 5000 AND avg_likes <= 14999 THEN 'Good Likes'
+      ELSE 'Low Likes'
+    END likes_category
+FROM marvel_avengers 
+ORDER BY avg_likes DESC;
+
+--JOIN
+SELECT * 
+FROM trades 
+JOIN users ON trades.user_id = users.user_id;
+
 
 
 -- ==========================================
