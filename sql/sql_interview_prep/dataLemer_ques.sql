@@ -263,4 +263,19 @@ LIMIT 3;
 Identifies the top 3 cities with the highest transaction volume.
 Helps marketing and operations teams target and allocate resources to our highest-demand urban markets.
 */
+
+-- Cities Average Post Hiatus (Part 1) [ Facebook ]
+--STATUS : REVISIT
+--8 min
+
+SELECT user_id,
+  (Max(post_date:: DATE) - MIN(post_date::DATE)) as days_between
+  -- post_date is timestamp , so convert it into date ttype to perform integer subtraction
+FROM posts
+WHERE EXTRACT(YEAR FROM post_date) = 2021
+Group BY user_id HAVING count(post_id) >1;
+
+/* BUISNESS INSIGHT- 
+Measures the Active Posting Window to evaluate platform stickiness and long-term user retention.
+A wider gap between a user's first and last post means they are a retained, consistent content creator, while a tiny gap signals a user who tested the platform briefly and potentially churned.
  

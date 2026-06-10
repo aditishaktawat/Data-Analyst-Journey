@@ -130,3 +130,19 @@ JOIN users ON trades.user_id = users.user_id;
 -- ==========================================
 -- SECTION 3: ADVANCED QUERYING (Window Functions)
 -- ==========================================
+
+--CTE
+With ranked_artist as (
+  SELECT artist_name,
+      genre, concert_revenue, number_of_members, 
+      concert_revenue / number_of_members as revenue_per_band_member,
+      Rank() OVER( PARTITION BY genre ORDER BY concert_revenue / number_of_members DESC)
+       as rnk
+  FROM concerts
+)
+
+SELECT artist_name,
+       concert_revenue,genre, number_of_members, revenue_per_band_member
+FROM ranked_artist
+WHERE rnk = 1 
+ORDER BY revenue_per_band_member DESC;
