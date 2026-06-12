@@ -56,3 +56,12 @@ Transitioning from in-memory arrays to enterprise-scale semantic models, utilizi
   * Engineered complex context overrides via `CALCULATE` mapping cross-table constraints (Salesperson, Category, and Temporal matrices).
   * Built tiered performance ranking matrices using optimized `SWITCH(TRUE())` engines.
 * **[View Full DAX Repository Logic](./03_Power_BI_Analytics/DAX_Calculations_Logs.md)**
+
+
+## 🐍 Phase 4: Python Data Analytics & In-Memory Processing
+
+## 📌 Architectural Overview
+This phase marks the transition from standard relational databases (SQL) and cell-based logic (Excel) to programmatic, multidimensional data manipulation using Python.
+
+### 🧮 Core Module: NumPy (`numpy.ipynb`)
+The first deployment in this environment focuses on **NumPy (Numerical Python)**, the foundational engine for high-speed scientific computing.
