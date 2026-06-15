@@ -43,4 +43,27 @@ WHERE artist_rank <6;
 Identify who are the star performers who who dominate the global top 10 charts.
 This data can be leveraged by marketing teams for high-profile promotional campaigns and advertisements to attract new users by showcasing our premium content catalog.
 */ 
- 
+
+
+--QUES: Histogram of Users and Purchases [Walmart] 
+-- STATUS: REVISIT
+-- TIME: 20 min
+ With ranked_transaction as (
+SELECT product_id, user_id, transaction_date,
+rank() OVER (PARTITION by user_id order by transaction_date desc) as rnk
+FROM user_transactions
+)
+
+SELECT count(product_id) as purchase_count, user_id,
+  transaction_date
+FROM ranked_transaction
+WHERE rnk = 1
+GROUP by user_id, transaction_date 
+ORDER by transaction_date 
+
+/*BUISNESS INSIGHT -
+Analyzes basket size and purchasing volume during a user's most recent checkout event.
+This helps identify whether retaining users are increasing their order sizes over time or if their final interactions show a decline in cart value.
+*/
+
+
