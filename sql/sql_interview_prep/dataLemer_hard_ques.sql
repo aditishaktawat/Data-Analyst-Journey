@@ -48,6 +48,35 @@ This helps leadership quickly identify which products are gaining market tractio
 
 
 
---QUESTION:  [Wayfair]
---STATUS: Done 
---TIME :
+--QUESTION: Maximize Prime Item Inventory [AMAZON]
+--STATUS: Revisit
+--TIME : 25 min
+
+WITH summary as(
+  SELECT item_type, Count(*)as item_count, sum(square_footage) as tot_sqrft
+  FROM inventory
+  GROUP by item_type
+),
+prime_occupied as (
+  SELECT item_type, 
+    tot_sqrft,
+    Floor(500000/ tot_sqrft)* tot_sqrft as prime_space,
+    Floor(500000/ tot_sqrft) * item_count as prime_item_count
+  FROM summary
+  WHERE item_type = 'prime_eligible'
+ )
+ 
+SELECT item_type,
+  CASE  
+    WHEN item_type = 'prime_eligible'
+      THEN (SELECT prime_item_count FROM prime_occupied)
+    When item_type = 'not_prime'
+      THEN FLOOR((500000 - (SELECT prime_space FROM prime_occupied)) / tot_sqrft) *item_count
+  END as item_cnt  
+FROM summary
+ORDER BY item_type desc;
+
+/* Buisness Insight -
+Optimizes warehouse space by locking in our high-priority "Prime" stock first, then packing the leftovers with standard items so we aren’t paying for empty floor space.
+*/
+

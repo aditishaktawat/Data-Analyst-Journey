@@ -146,3 +146,10 @@ SELECT artist_name,
 FROM ranked_artist
 WHERE rnk = 1 
 ORDER BY revenue_per_band_member DESC;
+
+
+--SELF JOIN
+SELECT e1.employee_id, e1.name AS employee_name
+FROM employee e1
+JOIN employee e2 ON e1.manager_id = e2.employee_id
+WHERE e1.salary > e2.salary;
