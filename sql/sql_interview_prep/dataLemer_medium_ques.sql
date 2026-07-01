@@ -99,17 +99,46 @@ Comparing these two sums helps data engineers spot systemic patterns and anomali
 */
 
 
---QUES:  [] 
--- STATUS: 
--- TIME:
+--QUES: User's Third Transaction [UBER] 
+-- STATUS: DONE
+-- TIME: 3.5 min
+
+with trans_rnk as (
+SELECT user_id,
+  spend, transaction_date,
+  Row_Number() OVER ( PARTITION BY user_id Order By transaction_date )
+    as rnk
+FROM transactions
+)
+
+Select user_id, spend, transaction_date
+FROM trans_rnk 
+where rnk = 3;
+
+/* BUISNESS INSIGHTS -
+Identifies the exact moment a customer completes their 3rd purchase—the critical milestone for customer retention. 
+This data feeds directly into our CRM, allowing marketing to automatically reward our newly converted "loyal" customers with targeted retention campaigns.
+*/
 
 
+--QUES: Second Highest Salary  [FAANG] 
+-- STATUS: DONE
+-- TIME: 4 min
 
---QUES:  [] 
--- STATUS: 
--- TIME:
+with salary_rnk as (
+SELECT salary,
+  row_number() Over( ORDER by salary desc) 
+    as rnk
+FROM employee
+)
+SELECT salary
+from salary_rnk 
+where rnk = 2;
 
-
+/* BUISNESS INSIGHTS -
+Isolates the second-highest salary bracket. HR and Finance teams often use this to evaluate executive pay structures 
+while excluding the top outlier (typically the CEO or Founder) to ensure equitable compensation among senior leadership.
+*/
 
 --QUES:  [] 
 -- STATUS: 
