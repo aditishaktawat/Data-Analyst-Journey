@@ -278,4 +278,71 @@ Group BY user_id HAVING count(post_id) >1;
 /* BUISNESS INSIGHT- 
 Measures the Active Posting Window to evaluate platform stickiness and long-term user retention.
 A wider gap between a user's first and last post means they are a retained, consistent content creator, while a tiny gap signals a user who tested the platform briefly and potentially churned.
- 
+*/
+
+-- QUES - Histogram of tweets [ Twitter ]
+--STATUS : REVISIT
+--8 min
+
+WITH total_tweets AS (
+SELECT COUNT(tweet_id) AS tweet_count_per_user,
+  user_id 
+FROM tweets
+WHERE tweet_date BETWEEN '01/01/2022' AND '12/31/2022'
+GROUP BY user_id
+)
+
+SELECT tweet_count_per_user as tweet_bucket,
+  COUNT(user_id) as user_num
+FROM total_tweets
+GROUP BY tweet_count_per_user;
+
+--Can be sloves using SUBQUERY also
+
+/* BUISNESS INSIGHT -
+Generates a histogram of user posting frequencies to segment the user base into "Casual," "Core," and "Power" users. 
+The Product team uses this distribution to tailor the app experience—such as designing gamification badges to incentivize Casual users to move into the Core bucket.
+*/
+
+
+-- QUES - Duplicate Job Listings [ Linkedin ]
+--STATUS : REVISIT
+--12 min
+
+With job_count AS (
+  SELECT company_id,
+    title, 
+    description, 
+    COUNT(job_id) AS job_count
+  FROM job_listings 
+  GROUP BY company_id, title, description
+)
+
+SELECT COUNT(DISTINCT(company_id)) as duplicate_companies
+FROM job_count
+WHERE job_count >1;
+
+--Can be sloves using SUBQUERY also
+
+/* BUISNESS INSIGHT -
+Identifies the exact number of companies spamming the platform with duplicate job listings.
+This allows the Trust & Safety team to flag or penalize offending accounts, maintaining data integrity and protecting the platform's credibility with job seekers.
+*/
+
+-- QUES - App Click-through Rate (CTR) [ Facebook ]
+--STATUS : REVISIT
+--8 min
+
+-- CLICK THROUGH RATE (CTR) = 100.0 * (no. of clicks / Total no. of impression)
+SELECT app_id, 
+  ROUND(100.0 * 
+    SUM( CASE WHEN event_type = 'click' THEN 1 ELSE 0 END) /
+    SUM( CASE WHEN event_type = 'impression' THEN 1 ELSE 0 END),2) as ctr
+FROM events 
+WHERE timestamp >= '01/01/2022' AND timestamp < '12/31/2022'
+GROUP BY app_id;
+
+/* BUISNESS INSIGHT -
+Calculates CTR for each individual app. This allows the Marketing team to identify which platforms drive the highest user engagement,
+enabling them to confidently reallocate advertising budgets away from underperforming apps and into the top converters.
+*/
