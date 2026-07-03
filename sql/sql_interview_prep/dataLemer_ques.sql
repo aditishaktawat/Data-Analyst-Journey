@@ -215,6 +215,17 @@ Identifies the manufacturers driving the highest financial losses and the count 
 This data is critical for prioritizing reviews of pricing strategies, manufacturing costs (COGS), and potential supply chain inefficiencies.
 */
 
+-- QUESTION: Pharmacy Analytics (Part 3) [CVS HEALTH]
+-- STATUS: REVISIT
+-- 7 min
+
+SELECT manufacturer,
+  CONCAT('$', Round(SUM(total_sales) / 1000000), ' million') as sales
+FROM pharmacy_sales
+GROUP BY manufacturer
+ORDER by SUM(total_sales) desc, manufacturer;
+
+
 -- QUESTION: Cards Issued Difference [JP MORGAN]
 -- STATUS: DONE
 -- 4 min
@@ -345,4 +356,38 @@ GROUP BY app_id;
 /* BUISNESS INSIGHT -
 Calculates CTR for each individual app. This allows the Marketing team to identify which platforms drive the highest user engagement,
 enabling them to confidently reallocate advertising budgets away from underperforming apps and into the top converters.
+*/
+
+-- QUES - Compressed Mean [ Alibaba ]
+--STATUS : REVISIT
+--8 min
+
+SELECT 
+  ROUND(
+  SUM (item_count::DECIMAL * order_occurrences)
+  / SUM(order_occurrences) ,1 ) as mean
+FROM items_per_order;
+
+/* BUISNESS INSIGHTS -
+Identifies the average cart size measured in units. The Merchandising team uses this baseline to design targeted product bundles. 
+For example, if the average order contains 1.8 items, marketing can confidently launch a "Buy 3, Get 10% Off" promotion specifically engineered to force the average basket size higher.
+*/
+
+-- QUES - Patient Support Analysis (Part 1) [ UnitedHealth ]
+--STATUS : REVISIT
+--8 min
+
+WITH call_records AS (
+  SELECT policy_holder_id,
+    COUNT(case_id)
+FROM callers
+GROUP BY policy_holder_id HAVING COUNT(case_id) >= 3
+)
+ SELECT COUNT(policy_holder_id) as policy_holder_count
+FROM call_records;
+
+/* BUISNESS INSIGHTS -
+Highlights the number of members experiencing significant friction with their healthcare needs. 
+The Product team can cross-reference these high-frequency callers to identify confusing policies or broken self-service portals, 
+ aiming to improve the overall member experience and reduce call center volume.
 */
