@@ -2,6 +2,35 @@
 Starting my journey to become a Data Analyst
 Completed the SQLBOLT lectures 1-5 and learnt how the basic opearators are used with SELECT sentence.
 
+## 📊 Phase 1: SQL
+
+
+### 7. Materialized Views (The Performance Booster)
+
+The Problem: Standard Views run the underlying query every single time someone looks at them. If a dashboard relies on a View that processes 10 million rows, the dashboard will take 5 minutes to load every morning.
+
+The Solution: A Materialized View actually runs the query and saves the physical results to the hard drive.
+
+Business Insight: "Implemented Materialized Views to cache complex aggregations. In a production environment, this reduces compute costs and allows BI dashboards (like Tableau) to load instantly, requiring only a nightly REFRESH MATERIALIZED VIEW command rather than querying raw data live."
+
+### 8. Recursive CTEs (WITH RECURSIVE)
+
+The Problem: Standard SQL is bad at "hierarchies" or "trees" (e.g., finding the CEO, then the VPs under the CEO, then the Directors under the VPs, then the Managers...).
+
+The Solution: Recursive queries loop over themselves until they hit the bottom of the tree.
+
+Business Insight: "Utilized Recursive CTEs to navigate hierarchical data structures. This technique is essential for HR analytics (mapping employee-manager reporting lines), Supply Chain (Bill of Materials/parts explosions), and identifying multi-tier referral networks."
+
+### 3. Stored Procedures (The Process Automator)
+
+The Problem: In a retail database, a single customer purchase requires multiple steps: checking if the item is in stock, inserting a new record into the sales table, and updating the products table to reduce inventory. If done manually, human error can lead to selling out-of-stock items or corrupting the database.
+
+The Solution: Encapsulate the entire business workflow into a reusable Stored Procedure.
+
+Business Insight: "Developed parameterized Stored Procedures to handle real-world e-commerce transactions. The procedure automatically validates product availability against requested quantities. If sufficient stock exists, it executes a multi-table update (logging the sale and deducting inventory), ensuring absolute data integrity and preventing costly out-of-stock sales errors."
+
+---
+
 ## 📊 Phase 2: Enterprise Excel Architecture
 
 **Objective:** Transitioning from foundational syntax to treating Microsoft Excel as a scalable, relational data engine capable of automated ETL, vector-based logic, and multi-dimensional modeling.
@@ -35,6 +64,7 @@ Transitioned from flat-file formulas to semantic aggregation layers to track ope
   * Deployed sorted arrays isolating top-tier high-value accounts from operational time-wasters.
 * **[Link to Dashboard Documentation & UI Asset](./02_Advanced_Excel_Vault/Call_Centre_Analytics/Call_Centre_Telemetry_Dashboard.md)**
 
+---
 
 ## 📊 Phase 3: Power BI & Semantic Data Modeling
 Transitioning from in-memory arrays to enterprise-scale semantic models, utilizing DAX, Star Schemas, and interactive UI design.
@@ -57,6 +87,7 @@ Transitioning from in-memory arrays to enterprise-scale semantic models, utilizi
   * Built tiered performance ranking matrices using optimized `SWITCH(TRUE())` engines.
 * **[View Full DAX Repository Logic](./03_Power_BI_Analytics/DAX_Calculations_Logs.md)**
 
+---
 
 ## 🐍 Phase 4: Python Data Analytics & In-Memory Processing
 
