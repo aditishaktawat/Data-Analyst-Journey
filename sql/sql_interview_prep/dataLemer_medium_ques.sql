@@ -140,18 +140,76 @@ Isolates the second-highest salary bracket. HR and Finance teams often use this 
 while excluding the top outlier (typically the CEO or Founder) to ensure equitable compensation among senior leadership.
 */
 
---QUES:  [] 
+--QUES: Sending vs. Opening Snaps [SNAPCHAT] 
+-- STATUS: REVISIT
+-- TIME: 10 min
+WITh activity_breakdowns as (
+SELECT b.age_bucket,
+  sum(time_spent) as total_time,
+  SUM( CASE WHEN activity_type = 'send' THEN time_spent ELSE 0 END) as send_time,
+  SUM( CASE WHEN activity_type = 'open' THEN time_spent ELSE 0 END) as open_time
+FROM activities a 
+JOIN age_breakdown b ON a.user_id = b.user_id
+WHERE a.activity_type IN ('send', 'open')
+group by b.age_bucket
+)
+
+SELECT age_bucket,
+  ROUND( 100.0 * send_time / total_time,2) as send_perc,
+  ROUND( 100.0 * open_time / total_time,2) as open_perc
+FROM activity_breakdowns;
+
+/* BUISNESS INSIGHT -
+Breaks down platform engagement dynamics (sending vs. opening) across different age demographics. 
+The Product Team uses this breakdown to identify "lurker" age groups (high open rates, low send rates) and target them with UX features—like prominent
+ "Quick Reply" buttons or interactive filters—to seamlessly convert passive consumers into active content creators.
+*/
+
+--QUES: Tweets' Rolling Averages [Twitter]
+-- STATUS: DONE
+-- TIME: 5 min
+
+SELECT 
+  user_id,
+  tweet_date,
+  ROUND(AVG(tweet_count) OVER (
+    PARTITION BY user_id
+    ORDER BY tweet_date 
+    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW),2) as rolling_avg_3d
+FROM tweets;
+
+/* BUISNESS INSIGHT -
+Calculates a 3-day rolling average of user tweet volume to track real-time engagement momentum.
+This dual-purpose metric allows the Growth team to trigger targeted subscription offers when a user's activity naturally peaks, 
+while simultaneously helping Trust & Safety instantly flag unnatural spikes that indicate bot or spam behavior.
+*/
+
+--QUES: Highest-Grossing Items [Amazon] 
 -- STATUS: 
 -- TIME:
 
+With rnk_products as (
+SELECT category,
+  product,
+  SUM(spend) as total_spend,
+  ROW_NUMBER () OVER (
+  PARTITION BY category ORDER BY SUM(spend) DESC) as rnk
+FROM product_spend
+WHERE  transaction_date >= '01/01/2022' AND transaction_date < '01/01/2023'
+GROUP BY category, product
+)
 
+SELECT category,
+  product,
+  total_spend
+FROM rnk_products 
+WHERE rnk < 3
+ORDER BY category, rnk;
 
---QUES:  [] 
--- STATUS: 
--- TIME:
-
-
-
---QUES:  [] 
--- STATUS: 
--- TIME:
+/* BUISNESS INSIGHT -
+Identifies the top two highest-grossing products within each category.
+- The Supply Chain and Inventory Management teams use this ranking to forecast demand and prioritize restocking, 
+ensuring that high-revenue "hero" items never experience costly stockouts.
+- The Marketing team leverages this data to identify high-demand "anchor" products, 
+using them as the focal point for targeted discount campaigns to drive maximum site traffic.
+*/
