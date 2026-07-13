@@ -213,3 +213,47 @@ ensuring that high-revenue "hero" items never experience costly stockouts.
 - The Marketing team leverages this data to identify high-demand "anchor" products, 
 using them as the focal point for targeted discount campaigns to drive maximum site traffic.
 */
+
+--QUES: Top Three Salaries [FAANG] 
+-- STATUS: DONE
+-- TIME: 7 min
+
+WITH high_salary AS (
+  SELECT name,
+    salary,
+    department_id,
+    DENSE_RANK() OVER ( PARTITION BY department_id 
+      ORDER BY salary DESC) as rnk
+  FROM employee
+)
+SELECT d.department_name,
+  h.name,
+  h.salary
+FROM high_salary h 
+JOIN department d ON d.department_id = h.department_id
+WHERE rnk <= 3
+ORDER BY department_name , salary DESC, name ;
+
+/* BUISNESS INSIGHT -
+This finds the top 3 highest-paid employees in every department.
+Why it matters: HR and Finance can use this list during annual reviews to see who our top earners are.
+It helps them make sure these key people are being paid fairly so they don't look for a job elsewhere.
+*/
+
+--QUES:  Signup Activation Rate [Tiktok] 
+-- STATUS: REVISIT
+-- TIME: 13 min
+
+SELECT
+  ROUND(COUNT(texts.email_id)::DECIMAL
+    /COUNT(emails.email_id),2) AS activation_rate
+FROM emails
+LEFT JOIN texts
+ON emails.email_id = texts.email_id
+AND texts.signup_action = 'Confirmed';
+
+/* BUISNESS INSIGHT -
+This calculates the percentage of users who successfully confirm their account via text message after signing up.
+Right now, only 33% of users are finishing the confirmation step. The product team can use this to investigate if the 
+text messages are failing to deliver, or if the process of entering a verification code is too frustrating for users.
+*/
