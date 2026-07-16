@@ -257,3 +257,38 @@ This calculates the percentage of users who successfully confirm their account v
 Right now, only 33% of users are finishing the confirmation step. The product team can use this to investigate if the 
 text messages are failing to deliver, or if the process of entering a verification code is too frustrating for users.
 */
+
+
+--QUES: Best-Selling Product [Amazon] 
+-- STATUS: REVISIT
+-- TIME: 15 min
+WITH best_prod AS(
+  SELECT p.product_name,
+    p.category_name,
+    ps.sales_quantity,
+    ps.rating,
+  DENSE_RANK() OVER (PARTITION BY p.category_name 
+                    ORDER BY ps.sales_quantity DESC,ps.rating DESC) as rnk
+  FROM products p
+  JOIN product_sales ps ON p.product_id = ps.product_id
+)
+
+SELECT category_name,
+  product_name
+FROM best_prod
+WHERE rnk = 1
+ORDER BY category_name;
+
+
+
+--QUES: User Shopping Sprees [Amazon] 
+-- STATUS: REVISIT
+-- TIME: 8 min
+SELECT DISTINCT T1.user_id
+FROM transactions T1 
+JOIN transactions T2 
+  ON DATE(T2.transaction_date) = DATE(T1.transaction_date) + 1
+JOIN transactions T3 
+  ON DATE(T3.transaction_date) = DATE(T1.transaction_date) + 2
+ORDER BY T1.user_id
+;
