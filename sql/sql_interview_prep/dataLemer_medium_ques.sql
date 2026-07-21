@@ -292,3 +292,16 @@ JOIN transactions T3
   ON DATE(T3.transaction_date) = DATE(T1.transaction_date) + 2
 ORDER BY T1.user_id
 ;
+
+--QUES: Patient Support Analysis (Part 2) [UnitedHealth]
+-- STATUS: DONE
+-- TIME: 7 min
+
+WITH category AS (
+SELECT COUNT(case_id) as total,
+  SUM( CASE WHEN call_category = 'n/a' OR call_category IS NULL THEN 1 ELSE 0 END ) as uncategorised
+FROM callers
+)
+
+SELECT ROUND(100.0 * uncategorised / total, 1) as uncategorised_call_pct
+FROM category;
